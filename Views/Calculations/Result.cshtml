@@ -1,0 +1,44 @@
+﻿@model DotNetScoringService.Dto.FinalResult
+
+@{
+    ViewData["Title"] = "Result";
+}
+
+<div class="container-md">
+    <div class="col text-center my-4">
+        @{
+            if (Model.calculationResult != null)
+            {
+                <h2>Your credit risk profile</h2>
+                <h2>@Html.DisplayFor(model => model.calculationResult.Score)</h2>
+            }
+            else
+            {
+                <!-- TBD: An error message about not getting a result of calculation -->
+                <h2>Error has occured. Please try again later</h2>
+            }
+
+            <div class="my-4" />
+
+            if (Model.recommendations != null)
+            {
+                @for (int i = 0; i < Model.recommendations.Count(); i++)
+                {
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="true" aria-controls="collapseOne">
+                                    Recommendation @Html.DisplayFor(model => model.recommendations.ElementAt(i).Number)
+                                </button>
+                            </h2>
+                            <div id="collapse" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body text-justify">
+                                    @Html.DisplayFor(model => model.recommendations.ElementAt(i).Text)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+</div>

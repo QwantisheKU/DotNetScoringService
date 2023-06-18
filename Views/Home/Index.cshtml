@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DotNetScoringService.Models.Calculation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="~/css/home.css" type="text/css" />
+
+<div class="col text-center my-4">
+    <hr>
+    <h2>Your calculations</h2>
+    <hr>
+</div>
+
+<div class="row">
+    <div class="mx-auto col-10 col-md-8 col-lg-6">
+        <form id="searchForm" class="form" method="get" action="{% url 'home' %}">
+            <div class="input-group mb-4 my-4">
+                <input type="text" class="form-control dark" name="search_query" placeholder="Search for calculation by it's name or result" value="">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Find</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="col table mb-4">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Result</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var calculation in Model)
+        {
+           <tr>
+                <td>@Html.DisplayFor(modelItem => calculation.Name)</td>
+                <td>Blank</td>
+                <td><a class="btn btn-primary" asp-controller="Calculations" asp-action="Result" asp-route-id="@calculation.ID" role="button">Link to calculation</a></td>
+                <td><a class="btn btn-danger" asp-controller="Calculations" asp-action="Delete" asp-route-id="@calculation.ID" role="button">X</a></td>
+           </tr> 
+        }
+        
+    </tbody>
+</table>
